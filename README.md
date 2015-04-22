@@ -8,10 +8,10 @@ MaterialLoadingProgressbarCSharp
 <h3>使用方式</h3>
 <p>在视图中按照如下方式使用</p>
 <pre>
-    <materialloadingprogressbarcsharp.CircleProgressBar
+    &ltmaterialloadingprogressbarcsharp.CircleProgressBar
         android:id="@+id/progress2"
         app:mlpb_progress_stoke_width="5dp"
         app:mlpb_progress_text_visibility="visible"
         android:layout_width="70dp"
-        android:layout_height="70dp" />
+        android:layout_height="70dp" /&gt
 </pre>
