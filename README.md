@@ -1,4 +1,4 @@
-# MaterialLoadingProgressbarCSharp
+# MaterialLoadingProgressbarCSharp（通过100款测试）
 MaterialLoadingProgressbarCSharp
 
 #原作者<a href="https://github.com/lsjwzh/MaterialLoadingProgressBar">Github</a>
