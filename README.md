@@ -1,7 +1,7 @@
 # MaterialLoadingProgressbarCSharp
 MaterialLoadingProgressbarCSharp
 
-#原作者<a href="">Github</a>
+#原作者<a href="https://github.com/lsjwzh/MaterialLoadingProgressBar">Github</a>
 <br />
 <img src="https://github.com/lsjwzh/MaterialLoadingProgressBar/raw/master/screen.gif" alt="ProgressBar" style="max-width:100%;">
 <br />
