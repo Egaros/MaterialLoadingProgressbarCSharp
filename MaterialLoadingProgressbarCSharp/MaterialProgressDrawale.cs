@@ -22,10 +22,9 @@ namespace MaterialLoadingProgressbarCSharp
         public const int LARGE = 0;
         public const int DEFAULT = 1;
 
-        private const IInterpolator LINEAR_INTERPOLATOR = new LinearInterpolator();
-        public const IInterpolator END_CURVE_INTERPOLATOR = new EndCurveInterpolator();
-        public const IInterpolator START_CURVE_INTERPOLATOR = new StartCurveInterpolator();
-        private const IInterpolator EASE_INTERPOLATOR = new AccelerateDecelerateInterpolator();
+        private IInterpolator LINEAR_INTERPOLATOR = new LinearInterpolator();
+
+        private IInterpolator EASE_INTERPOLATOR = new AccelerateDecelerateInterpolator();
 
         private const int CIRCLE_DIAMETER = 40;
         private const float CENTER_RADIUS = 8.75f;
@@ -45,7 +44,7 @@ namespace MaterialLoadingProgressbarCSharp
         private const int ARROW_WIDTH_LARGE = 12;
         private const int ARROW_HEIGHT_LARGE = 6;
         public const float MAX_PROGRESS_ARC = 0.8f;
-        private const Color[] COLORS = new Color[] { Color.Black };
+        private Color[] COLORS = new Color[] { Color.Black };
 
         private List<Animation> mAnimators = new List<Animation>();
 

@@ -15,6 +15,9 @@ namespace MaterialLoadingProgressbarCSharp
 {
     public class DefaultAnimation : Animation
     {
+		private IInterpolator END_CURVE_INTERPOLATOR = new EndCurveInterpolator();
+		private IInterpolator START_CURVE_INTERPOLATOR = new StartCurveInterpolator();
+		
         private MaterialProgressDrawale mProgressDrawable;
 
         public DefaultAnimation(MaterialProgressDrawale progressDrawable)
@@ -37,8 +40,8 @@ namespace MaterialLoadingProgressbarCSharp
                 float startingRotation = ring.GetStartingRotation();
 
                 float minArc = MaterialProgressDrawale.MAX_PROGRESS_ARC - minProgressArc;
-                float endTrim = startingEndTrim + (minArc * MaterialProgressDrawale.START_CURVE_INTERPOLATOR.GetInterpolation(interpolatedTime));
-                float startTrim = startingTrim + (MaterialProgressDrawale.MAX_PROGRESS_ARC * MaterialProgressDrawale.END_CURVE_INTERPOLATOR.GetInterpolation(interpolatedTime));
+                float endTrim = startingEndTrim + (minArc * START_CURVE_INTERPOLATOR.GetInterpolation(interpolatedTime));
+                float startTrim = startingTrim + (MaterialProgressDrawale.MAX_PROGRESS_ARC * END_CURVE_INTERPOLATOR.GetInterpolation(interpolatedTime));
 
                 float sweepTrim = endTrim - StartTime;
 

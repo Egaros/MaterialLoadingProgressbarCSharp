@@ -14,20 +14,22 @@ using Android.Views.Animations;
 using Android.Graphics.Drawables;
 using Android.Util;
 using Android.Content.Res;
+using Android.Graphics.Drawables.Shapes;
+using Android.Support.V4.View;
 
 namespace MaterialLoadingProgressbarCSharp
 {
     public class CircleProgressBar : ImageView
     {
-        private const Color KEY_SHADOW_COLOR = new Color(0x1E000000);
-        private const Color FILL_SHADOW_COLOR = new Color(0x3D000000);
+        private Color KEY_SHADOW_COLOR = new Color(0x1E000000);
+        
 
         private const float X_OFFSET = 0f;
         private const float Y_OFFSET = 1.75f;
         private const float SHADOW_RADIUS = 3.5f;
         private int SHADOW_ELEVATION = 4;
 
-        private const Color DEFAULT_CIRCLE_BG_LIGHT = new Color(0xff,0xfa,0xfa,0xfa);
+        private Color DEFAULT_CIRCLE_BG_LIGHT = new Color(0xff,0xfa,0xfa,0xfa);
         private const int DEFAULT_CIRCLE_DIAMETER = 56;
         private const int STROKE_WIDTH_LARGE = 3;
         public const int DEFAULT_TEXT_SIZE = 9;
@@ -122,7 +124,227 @@ namespace MaterialLoadingProgressbarCSharp
         protected override void OnLayout(bool changed, int left, int top, int right, int bottom)
         {
             base.OnLayout(changed, left, top, right, bottom);
+            float density = Context.Resources.DisplayMetrics.Density;
+            mDiameter = Math.Min(MeasuredWidth, MeasuredHeight);
+            if (mDiameter <= 0)
+            {
+                mDiameter = (int)density * DEFAULT_CIRCLE_DIAMETER;
+            }
+            if (Background == null && mCircleBackgroundEnabled)
+            {
+                int shadowYOffset = (int)(density * Y_OFFSET);
+                int shadowXOffset = (int)(density * X_OFFSET);
+                mShadowRadius = (int)(density * SHADOW_RADIUS);
 
+                if (ElevationSupported())
+                {
+                    mBgCircle = new ShapeDrawable(new OvalShape());
+                    ViewCompat.SetElevation(this, SHADOW_ELEVATION * density);
+                }
+                else
+                {
+                    OvalShape oval = new OvalShadow(mShadowRadius, mDiameter, this);
+                    mBgCircle = new ShapeDrawable(oval);
+                    ViewCompat.SetLayerType(this, ViewCompat.LayerTypeSoftware, mBgCircle.Paint);
+                    mBgCircle.Paint.SetShadowLayer(mShadowRadius, shadowXOffset, shadowYOffset,
+                        KEY_SHADOW_COLOR);
+                    int padding = (int)mShadowRadius;
+                    SetPadding(padding, padding, padding, padding);
+                }
+                mBgCircle.Paint.Color = mBackGroundColor;
+                SetBackgroundDrawable(mBgCircle);
+            }
+            mProgressDrawable.SetBackgrounColor(mBackGroundColor);
+            mProgressDrawable.SetColorSchemeColors(mColors);
+            mProgressDrawable.SetSizeParameters(mDiameter, mDiameter,
+                mInnerRadius <= 0 ? (mDiameter - mProgressStokeWidth * 2) / 4 : mInnerRadius,
+                mProgressStokeWidth,
+                mArrowWidth < 0 ? mProgressStokeWidth * 5 : mArrowWidth,
+                mArrowHeight < 0 ? mProgressStokeWidth * 2 : mArrowHeight);
+            if (IsShowArrow())
+            {
+                mProgressDrawable.SetArrowScale(1f);
+                mProgressDrawable.ShowArrow(true);
+            }
+            base.SetImageDrawable(null);
+            base.SetImageDrawable(mProgressDrawable);
+            mProgressDrawable.SetAlpha(255);
+            mProgressDrawable.Start();
+        }
+
+        protected override void OnDraw(Canvas canvas)
+        {
+            base.OnDraw(canvas);
+            if (mIfDrawText)
+            {
+                String text = String.Format("{0}%", mProgress);
+                int x = Width / 2 - text.Length * mTextSize / 4;
+                int y = Height / 2 + mTextSize / 4;
+                canvas.DrawText(text, x, y, mTextPaint);
+            }
+        }
+
+        public override void SetImageResource(int resId)
+        {
+            
+        }
+
+        private bool IsShowArrow()
+        {
+            return mShowArrow;
+        }
+
+        public void SetShowArrow(bool showArrow)
+        {
+            mShowArrow = showArrow;
+        }
+
+        public override void SetImageURI(Android.Net.Uri uri)
+        {
+            base.SetImageURI(uri);
+        }
+
+        public override void SetImageDrawable(Drawable drawable)
+        {
+            
+        }
+
+        public void SetAnimationListener(Animation.IAnimationListener listener)
+        {
+            mListener = listener;
+        }
+
+        protected override void OnAnimationStart()
+        {
+            base.OnAnimationStart();
+            if (mListener != null)
+            {
+                mListener.OnAnimationStart(Animation);
+            }
+        }
+
+        protected override void OnAnimationEnd()
+        {
+            base.OnAnimationEnd();
+            if (mListener != null)
+            {
+                mListener.OnAnimationEnd(Animation);
+            }
+        }
+
+        public void SetColorSchemeResources(params int[] colorResIds)
+        {
+            Color[] colorRes = new Color[colorResIds.Length];
+            for (int i = 0; i < colorResIds.Length; i++)
+            {
+                colorRes[i] = Resources.GetColor(colorResIds[i]);
+            }
+            SetColorSchemeColors(colorRes);
+        }
+
+        private void SetColorSchemeColors(Color[] colorRes)
+        {
+            mColors = colorRes;
+            if (mProgressDrawable != null)
+            {
+                mProgressDrawable.SetColorSchemeColors(colorRes);
+            }
+        }
+
+        public void SetBackgroundColor(int colorRes)
+        {
+            if (Background is ShapeDrawable)
+            {
+                ((ShapeDrawable)Background).Paint.Color = Resources.GetColor(colorRes);
+            }
+        }
+        public bool IsShowProgressText()
+        {
+            return mIfDrawText;
+        }
+
+        public void SetShowProgressText(bool ifDrawText)
+        {
+            mIfDrawText = ifDrawText;
+        }
+
+        public int Max
+        {
+            get
+            {
+                return mMax;
+            }
+            set
+            {
+                mMax = value;
+            }
+        }
+
+        public int Progress
+        {
+            get
+            {
+                return mProgress;
+            }
+            set
+            {
+                if (Max > 0)
+                {
+                    mProgress = value;
+                }
+            }
+        }
+
+        public bool CircleBackgroundEnabled
+        {
+            get
+            {
+                return mCircleBackgroundEnabled;
+            }
+            set
+            {
+                mCircleBackgroundEnabled = value;
+            }
+        }
+
+        public override ViewStates Visibility
+        {
+            get
+            {
+                return base.Visibility;
+            }
+            set
+            {
+                base.Visibility = value;
+                if (mProgressDrawable != null)
+                {
+                    if (value != ViewStates.Visible)
+                    {
+                        mProgressDrawable.Stop();
+                    }
+                    mProgressDrawable.SetVisible(value == ViewStates.Visible, false);
+                }
+            }
+        }
+
+        protected override void OnAttachedToWindow()
+        {
+            base.OnAttachedToWindow();
+            if (mProgressDrawable != null)
+            {
+                mProgressDrawable.Stop();
+                mProgressDrawable.SetVisible(Visibility == ViewStates.Visible, false);
+            }
+        }
+
+        protected override void OnDetachedFromWindow()
+        {
+            base.OnDetachedFromWindow();
+            if (mProgressDrawable != null)
+            {
+                mProgressDrawable.Stop();
+                mProgressDrawable.SetVisible(false, false);
+            }
         }
     }
 }

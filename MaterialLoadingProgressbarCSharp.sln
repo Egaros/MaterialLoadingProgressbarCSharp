@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaterialLoadingProgressbarCSharp", "MaterialLoadingProgressbarCSharp\MaterialLoadingProgressbarCSharp.csproj", "{8646C1CE-3311-4C62-85CE-A8B6D250F0F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleActivity", "SampleActivity\SampleActivity.csproj", "{B0714D28-35E3-4E13-BCF4-02B824F3FA43}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +15,12 @@ Global
 		{8646C1CE-3311-4C62-85CE-A8B6D250F0F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8646C1CE-3311-4C62-85CE-A8B6D250F0F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8646C1CE-3311-4C62-85CE-A8B6D250F0F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0714D28-35E3-4E13-BCF4-02B824F3FA43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0714D28-35E3-4E13-BCF4-02B824F3FA43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0714D28-35E3-4E13-BCF4-02B824F3FA43}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{B0714D28-35E3-4E13-BCF4-02B824F3FA43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0714D28-35E3-4E13-BCF4-02B824F3FA43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0714D28-35E3-4E13-BCF4-02B824F3FA43}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
