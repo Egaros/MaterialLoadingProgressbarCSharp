@@ -1,5 +1,5 @@
-# MaterialLoadingProgressbarCSharp（通过100款测试）
-MaterialLoadingProgressbarCSharp
+# MaterialLoadingProgressbarCSharp
+MaterialLoadingProgressbarCSharp，已通过100款手机的云测试
 
 #原作者<a href="https://github.com/lsjwzh/MaterialLoadingProgressBar">Github</a>
 <br />
